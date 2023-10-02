@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\livre as Livres;
+use App\Models\Livre as Livres;
+use App\Models\Emprunt as Emprunts;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
@@ -14,7 +15,36 @@ class livre extends Controller
     public function index()
     {
         $livre = Livres::All();
-        return view('Admin.livres' ,['livre'=>$livre]);
+        return view('Admin.index' ,['livre'=>$livre]);
+    }
+
+    public function livre_disponible()
+    {
+      $livreDisponible = Emprunts::join('livres','livres.id','=','emprunts.idLivre')
+        ->select('emprunts.*','livres.*')
+        ->where('emprunts.statut', '0')
+        ->get();
+        // a rechercher . comment faire une recherche a partir d'une liste d'objets
+        return view('Admin.disponible' ,['livreDisponible'=>$livreDisponible]);
+    }
+
+    public function livre_en_pret()
+    {
+        $livreEnPret = Emprunts::join('livres','livres.id','=','emprunts.idLivre')
+        ->select('emprunts.*','livres.*')
+        ->where('emprunts.statut', '1')
+        ->get();
+        // a rechercher . comment faire une recherche a partir d'une liste d'objets
+        return view('Admin.pret' ,['livreEnPret'=>$livreEnPret]);
+    }
+
+    public function utilisateurs()
+    {
+        $utilisateurs = Emprunts::select('idLivre')
+        ->where('emprunts.statut', '0')
+        ->get();
+        // a rechercher . comment faire une recherche a partir d'une liste d'objets
+        return view('Admin.index' ,['livre'=>$livre]);
     }
 
     /**
@@ -31,24 +61,42 @@ class livre extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'=>'required',
+            'titre'=>'required',
             'auteur'=>'required',
-            'date_parution'=>'required',
-            'auteur'=>'required'
+            'date_pub'=>'required',
+            'maison_edition'=>'required',
+            'langue'=>'required',
+            'description'=>'required',
         ]);
 
-        $livre = new Livres();
-
-        $livre->name = $request->input('name');
-
-        $livre->auteur = $request->input('auteur');
-
-        $livre->date_parution = $request->input('date_parution');
-
+        $livre = new Livres([
+            'titre' => $request->input('titre'),
+            'auteur' => $request->input('auteur'),
+            'date_pub' => $request->input('date_pub'),
+            'maison_edition' => $request->input('maison_edition'),
+            'langue' => $request->input('langue'),
+            'description' => $request->input('description')
+        ]);
         $livre->save();
 
+        // $livre = new Livres();
 
-        return Redirect::to('/ajout-livre');
+        // $livre->titre = $request->input('titre');
+
+        // $livre->auteur = $request->input('auteur');
+
+        // $livre->date_pub = $request->input('date_pub');
+
+        // $livre->maison_edition = $request->input('maison_edition');
+
+        // $livre->langue = $request->input('langue');
+
+        // $livre->description = $request->input('description');
+
+        // $livre->save();
+
+
+        return Redirect::to('/index');
     }
 
     /**
@@ -64,15 +112,33 @@ class livre extends Controller
      */
     public function edit(string $id)
     {
-        //
+         $model=livres::find($id);
+       
+       return view('Admin.modif-livre',['model'=>$model]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        //
+        $livre_modif=livres::find($request->input('id_livre'));
+        
+        $livre_modif->titre=$request->input('titre');
+
+        $livre_modif->auteur=$request->input('auteur');
+
+        $livre_modif->date_pub=$request->input('date_pub');
+
+        $livre_modif->maison_edition=$request->input('maison_edition');
+
+        $livre_modif->langue=$request->input('langue');
+
+        $livre_modif->description=$request->input('description');
+
+        $livre_modif->save();
+
+            return Redirect::to('/index');
     }
 
     /**
@@ -80,6 +146,7 @@ class livre extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $model = livres::where('id',$id)->delete();
+        return redirect()->back()->withStatus(__('Suppresion réussi avec succès'));
     }
 }

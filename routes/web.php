@@ -56,6 +56,21 @@ Route::middleware('auth')->group(function () {
 Route::get('/user/index', function () {
     return view('users.index');
 	});
+Route::get('/user/shop', function () {
+	return view('users.shop');
+	});
+
+Route::get('/user/shop-details', function () {
+	return view('users.shop-details');
+	});
+
+Route::get('/user/shopping-cart', function () {
+	return view('users.shopping-cart');
+	});
+
+Route::get('/user/blog', function () {
+	return view('users.blog');
+	});
 
 
 	

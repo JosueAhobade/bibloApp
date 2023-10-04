@@ -44,18 +44,16 @@
                 <div class="col-lg-6 col-md-6">
                     <nav class="header__menu mobile-menu">
                         <ul>
-                            <li class="active"><a href="./index.html">Accueil</a></li>
-                            <li><a href="./shop.html">Boutique</a></li>
+                            <li class="active"><a href="./index">Accueil</a></li>
+                            <li><a href="./shop">Boutique</a></li>
                             <li><a href="#">Pages</a>
                                 <ul class="dropdown">
-                                    <li><a href="./shop-details.html">Shop Details</a></li>
-                                    <li><a href="./shopping-cart.html">Shopping Cart</a></li>
-                                    <li><a href="./checkout.html">Check Out</a></li>
-                                    <li><a href="./blog-details.html">Blog Details</a></li>
+                                    <li><a href="./shop-details">Shop Details</a></li>
+                                    <li><a href="./shopping-cart">Shopping Cart</a></li>
+                                    <li><a href="./blog">Blog Details</a></li>
                                 </ul>
                             </li>
-                            <li><a href="./blog.html">Blog</a></li>
-                            <li><a href="./contact.html">Contacts</a></li>
+                            <li><a href="./blog">Blog</a></li>
                         </ul>
                     </nav>
                 </div>

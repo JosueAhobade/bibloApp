@@ -24,7 +24,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-//****************** Route du projet ************************************************
+//****************** Route admin ************************************************
 
 Route::get('/index', [App\Http\Controllers\Livre::class, 'index']
 	)->middleware(['auth', 'verified'])->name('home');
@@ -51,6 +51,12 @@ Route::middleware('auth')->group(function () {
 	Route::get('/disponible',[App\Http\Controllers\livre::class, 'livre_disponible']);
 
 });
+
+//****************** Route user ************************************************
+Route::get('/user/index', function () {
+    return view('users.index');
+	});
+
 
 	
 //****************** Route par défaut ************************************************

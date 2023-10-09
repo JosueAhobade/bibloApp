@@ -18,6 +18,7 @@ return new class extends Migration
             $table->date('date_pub');
             $table->string('maison_edition');
             $table->string('langue');
+            $table->string('livre_image');
             $table->string('description');
             $table->timestamps();
         });

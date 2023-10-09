@@ -76,7 +76,7 @@
                   <div class="card-body">
                     <h4 class="card-title">Ajout de livre</h4>
                     <p class="card-description">Formulaire d'ajout de livre </p>
-                    <form action="/add-books" method="post" class="forms-sample">
+                    <form action="/add-books" method="post" class="forms-sample" enctype="multipart/form-data">
                       @csrf
                       <div class="form-group">
                         <label for="exampleInputUsername1">Titre du livre</label>
@@ -97,6 +97,10 @@
                       <div class="form-group">
                         <label for="">Langue</label>
                         <input type="text" name="langue" class="form-control" id="" placeholder="Langue" required="" />
+                      </div>
+                      <div class="form-group">
+                        <label for="">Image</label>
+                        <input type="file" name="livre_image" class="form-control" id=""  required="" />
                       </div>
                       <div class="form-group">
                         <label for="">Description</label>

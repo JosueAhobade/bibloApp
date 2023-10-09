@@ -14,6 +14,7 @@ class Livre extends Model
         'date_pub',
         'maison_edition',
         'langue',
+        'livre_image',
         'description',
     ];
 }

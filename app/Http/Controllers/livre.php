@@ -66,8 +66,12 @@ class livre extends Controller
             'date_pub'=>'required',
             'maison_edition'=>'required',
             'langue'=>'required',
+            'livre_image'=>  'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048|dimensions:min_width=100,min_height=100,max_width=1000,max_height=1000',
             'description'=>'required',
         ]);
+
+        $file_name = time() . '.' . request()->livre_image->getClientOriginalExtension();
+        request()->livre_image->move(public_path('images'), $file_name);
 
         $livre = new Livres([
             'titre' => $request->input('titre'),
@@ -75,6 +79,7 @@ class livre extends Controller
             'date_pub' => $request->input('date_pub'),
             'maison_edition' => $request->input('maison_edition'),
             'langue' => $request->input('langue'),
+            'livre_image' => $file_name,
             'description' => $request->input('description')
         ]);
         $livre->save();

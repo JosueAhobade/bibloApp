@@ -6,6 +6,7 @@ use App\Models\Livre as Livres;
 use App\Models\Emprunt as Emprunts;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\DB;
 
 class livre extends Controller
 {
@@ -38,6 +39,31 @@ class livre extends Controller
         return view('Admin.pret' ,['livreEnPret'=>$livreEnPret]);
     }
 
+    public function afficher_livre()
+    {
+        // $livre = Livres::latest('created_at')->first();
+        //  return view('users.index' ,['livre'=>$livre]);
+
+        // $livre = DB::table('livres')
+        // ->join('emprunts', function($join) {
+        // $join->on(1, '=', 1); // Join without a specific condition
+        // })
+        // ->select('livres.*', 'emprunts.*')
+        // ->orderBy('created_at','desc')
+        // ->get();
+
+        // $livre = DB::table('livres')
+        // ->crossJoin('emprunts')
+        // ->select('livres.*', 'emprunts.*')
+        // ->get();
+
+
+        $livre = Livres::orderBy('created_at','desc')
+        ->get();
+        //$livre_all = Livres::all();
+          return view('users.index' ,['livre'=>$livre]);
+    }
+
     public function utilisateurs()
     {
         $utilisateurs = Emprunts::select('idLivre')
@@ -66,7 +92,7 @@ class livre extends Controller
             'date_pub'=>'required',
             'maison_edition'=>'required',
             'langue'=>'required',
-            'livre_image'=>  'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048|dimensions:min_width=100,min_height=100,max_width=1000,max_height=1000',
+            'livre_image'=>  'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048|dimensions:min_width=100,min_height=100,max_width=1500,max_height=1500',
             'description'=>'required',
         ]);
 
@@ -122,6 +148,13 @@ class livre extends Controller
        return view('Admin.modif-livre',['model'=>$model]);
     }
 
+    public function editEmprunt(string $id)
+    {
+        $model=livres::find($id);
+       
+       return view('users.shopping-cart',['model'=>$model]);
+    }
+
     /**
      * Update the specified resource in storage.
      */
@@ -144,6 +177,24 @@ class livre extends Controller
         $livre_modif->save();
 
             return Redirect::to('/index');
+    }
+
+    public function ajout_emprunt(Request $request)
+    {
+        $emprunt = livres::find($request->input('idLivre'));
+
+        $emprunt->dateEmprunt = now();
+
+        $emprunt->dateRemise =$request->input('dateRemise');
+
+        $emprunt->idEtu = Auth()->user()->id;
+
+        $emprunt->disponible = 1;
+
+        $emprunt->save();
+
+
+         return Redirect::to('/user/index');
     }
 
     /**

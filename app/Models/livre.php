@@ -16,5 +16,9 @@ class Livre extends Model
         'langue',
         'livre_image',
         'description',
+        'idEtu',
+        'disponible',
+        'dateEmprunt',
+        'dateRemise'
     ];
 }

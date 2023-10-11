@@ -7,7 +7,7 @@
     <meta name="keywords" content="Male_Fashion, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Male-Fashion | Template</title>
+    <title>Bibliothèque | UG</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
@@ -35,11 +35,11 @@
     <!-- Header Section Begin -->
     <header class="header">
         <div class="container">
-            <div class="row">
+            <div class="row ">
                 <div class="col-lg-3 col-md-3">
-                    <div class="header__logo">
-                        <a href="./index.html"><img src="/asset/img/logo.png" alt=""></a>
-                    </div>
+                    
+                        <a href="user/index"><img src="/img/logo.png" alt="" style="width: 75px; height: 75px;"></a>
+                    
                 </div>
                 <div class="col-lg-6 col-md-6">
                     <nav class="header__menu mobile-menu">

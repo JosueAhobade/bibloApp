@@ -26,7 +26,7 @@
     <section class="shopping-cart spad">
         <div class="container">
             <div class="row">
-                <div class="col-lg-8">
+                <!-- <div class="col-lg-8">
                     <div class="shopping__cart__table">
                         <table>
                             <thead>
@@ -133,23 +133,23 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-4">
+                </div> -->
+                <div class="col-lg-8">
                     <div class="cart__discount">
-                        <h6>Discount codes</h6>
-                        <form action="#">
-                            <input type="text" placeholder="Coupon code">
-                            <button type="submit">Apply</button>
+                        <h6>Date remise du livre</h6>
+                        <form action="/emprunt" method="post">
+                            @csrf
+                            <input type="hidden" value="{{$model->id}}" name="idLivre">
+                            <input type="date" name="dateRemise" placeholder="Date de remise">
+                            <button type="submit">Confirmer emprunt</button>
                         </form>
                     </div>
-                    <div class="cart__total">
-                        <h6>Cart total</h6>
-                        <ul>
-                            <li>Subtotal <span>$ 169.50</span></li>
-                            <li>Total <span>$ 169.50</span></li>
-                        </ul>
-                        <a href="#" class="primary-btn">Proceed to checkout</a>
-                    </div>
+                    
+                </div>
+
+                <div class="col-lg-4">
+                     <img src="{{ asset('images/' . $model->livre_image) }}" alt="" style=" max-width: 100%; height: auto;">
+                    
                 </div>
             </div>
         </div>

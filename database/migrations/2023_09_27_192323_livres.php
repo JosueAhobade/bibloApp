@@ -20,6 +20,11 @@ return new class extends Migration
             $table->string('langue');
             $table->string('livre_image');
             $table->string('description');
+            $table->unsignedBigInteger('idEtu')->nullable(); 
+            $table->foreign('idEtu')->references('id')->on('users'); 
+            $table->boolean('disponible')->nullable(); 
+            $table->string('dateEmprunt')->nullable();
+            $table->string('dateRemise')->nullable();
             $table->timestamps();
         });
     }

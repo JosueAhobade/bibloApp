@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('auth.register');
+    return view('auth.login');
 });
 
 Route::get('/dashboard', function () {
@@ -53,9 +53,10 @@ Route::middleware('auth')->group(function () {
 });
 
 //****************** Route user ************************************************
-Route::get('/user/index', function () {
-    return view('users.index');
-	});
+
+Route::get('/user/index',[App\Http\Controllers\livre::class, 'afficher_livre']);
+Route::get('/user/pageloan{id}',[App\Http\Controllers\livre::class, 'editEmprunt']);
+Route::post('/emprunt', [App\Http\Controllers\livre::class, 'ajout_emprunt']);
 Route::get('/user/shop', function () {
 	return view('users.shop');
 	});

@@ -4120,7 +4120,7 @@ fieldset:disabled .ajax-upload-dragdrop a.ajax-file-upload,
 
 .btn-success {
   color: #fff;
-  background-color: #00cccd;
+  background-color: #90b8f5;
   border-color: #00cccd; }
   .btn-success:hover {
     color: #fff;
@@ -4147,9 +4147,9 @@ fieldset:disabled .ajax-upload-dragdrop a.ajax-file-upload,
       box-shadow: 0 0 0 0.2rem rgba(38, 212, 213, 0.5); }
 
 .btn-info {
-  color: #fff;
-  background-color: #198ae3;
-  border-color: #198ae3; }
+  color: #000;
+  background-color: #3fcef694;
+  border-color: #3fcef694; }
   .btn-info:hover {
     color: #fff;
     background-color: #1575c1;
@@ -5554,7 +5554,7 @@ input[type="button"].btn-block {
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
   padding-left: 0;
-  margin-bottom: 0;
+  margin-top: 90 px;
   list-style: none; }
 
 .nav-link {
@@ -7525,7 +7525,7 @@ a.close.disabled {
   vertical-align: text-top !important; }
 
 .bg-primary, #theme-settings .settings-close {
-  background-color: #3f50f6 !important; }
+  background-color: #a22dff5c !important; }
 
 a.bg-primary:hover, #theme-settings a.settings-close:hover, a.bg-primary:focus, #theme-settings a.settings-close:focus,
 button.bg-primary:hover,
@@ -7543,7 +7543,7 @@ button.bg-secondary:focus {
   background-color: #bfbfbf !important; }
 
 .bg-success, .datepicker-custom .datepicker.datepicker-inline .datepicker-days .table-condensed tbody tr td.day.today:before {
-  background-color: #00cccd !important; }
+  background-color: #ff3ca6 !important; }
 
 a.bg-success:hover, a.bg-success:focus,
 button.bg-success:hover,
@@ -7559,7 +7559,7 @@ button.bg-info:focus {
   background-color: #146eb5 !important; }
 
 .bg-warning, .datepicker-custom .datepicker.datepicker-inline .datepicker-days .table-condensed tbody tr td.day.active:before {
-  background-color: #ffab2d !important; }
+  background-color: #a22dff5c !important; }
 
 a.bg-warning:hover, a.bg-warning:focus,
 button.bg-warning:hover,
@@ -10580,7 +10580,7 @@ input:focus {
 /* Backgrounds  */
 /* inverse varient */
 .bg-inverse-icon-primary {
-  background: #0818b2;
+  background: #7a738d;
   border-color: #3f50f6; }
   .bg-inverse-icon-primary .bg-item {
     color: #3f50f6; }
@@ -10626,7 +10626,7 @@ input:focus {
         background: transparent; }
 
 .bg-inverse-icon-success {
-  background: #005253;
+  background: #545e768c;
   border-color: #00cccd; }
   .bg-inverse-icon-success .bg-item {
     color: #00cccd; }
@@ -10672,7 +10672,7 @@ input:focus {
         background: transparent; }
 
 .bg-inverse-icon-warning {
-  background: #b26b00;
+  background: rgba(63, 80, 246, 0.5);
   border-color: #ffab2d; }
   .bg-inverse-icon-warning .bg-item {
     color: #ffab2d; }
@@ -14600,7 +14600,7 @@ dl {
     padding-right: 15px;
     width: calc(100% - 260px);
     height: 70px;
-    background: #000; }
+    background: #313131e0; }
     @media (max-width: 991px) {
       .navbar .navbar-menu-wrapper {
         width: 100%;
@@ -14884,8 +14884,8 @@ dl {
 /* Sidebar */
 .sidebar {
   min-height: calc(100vh - 70px);
-  background: -webkit-gradient(linear, left top, left bottom, from(#e6e5f2), to(#4599cd));
-  background: linear-gradient(to bottom, #e6e5f2, #4599cd);
+  background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#ce34a6));
+ 
   font-family: "Rubik", sans-serif;
   padding: 0;
   width: 260px;
@@ -14898,21 +14898,20 @@ dl {
     width: auto;
     height: 70px; }
     .sidebar .sidebar-brand-wrapper .sidebar-brand {
-      padding: 2.25rem 0 0.25rem 40px; }
+      padding:6.25rem 0 .5rem 50px; }
       .rtl .sidebar .sidebar-brand-wrapper .sidebar-brand {
         padding: 20px 61px 10px 0; }
       .sidebar .sidebar-brand-wrapper .sidebar-brand img {
         width: calc(260px - 130px);
         max-width: 100%;
-        height: 48px;
         margin: auto;
         vertical-align: middle; }
     .sidebar .sidebar-brand-wrapper .brand-logo-mini {
       display: none; }
       .sidebar .sidebar-brand-wrapper .brand-logo-mini img {
-        width: calc(70px - 50px);
+        
         max-width: 100%;
-        height: 35px;
+        
         margin: auto; }
   .sidebar .nav {
     overflow: hidden;
@@ -14922,7 +14921,7 @@ dl {
     -webkit-box-direction: normal;
     -ms-flex-direction: column;
     flex-direction: column;
-    margin-bottom: 60px; }
+    margin-top: 80px; }
     .sidebar .nav .nav-item {
       padding: 0 2.25rem;
       -webkit-transition-duration: 0.25s;
@@ -15472,7 +15471,7 @@ dl {
       width: 100%; } }
 
 .content-wrapper {
-  background: #f2f2f2;
+  background: #dd7a7a7a;
   padding: 2.75rem 2.25rem;
   width: 100%;
   -webkit-box-flex: 1;

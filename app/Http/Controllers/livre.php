@@ -57,11 +57,19 @@ class livre extends Controller
         // ->select('livres.*', 'emprunts.*')
         // ->get();
 
+        $livre_all = Livres::all();
 
-        $livre = Livres::orderBy('created_at','desc')
+        $livre_new = Livres::orderBy('created_at','desc')
+        ->take(10)
         ->get();
+
+        $livre_best = Livres::select('*')
+        ->where('nbreEmprunt', '>', 5)
+        ->get();
+
         //$livre_all = Livres::all();
-          return view('users.index' ,['livre'=>$livre]);
+          return view('users.index' ,['livre_all'=>$livre_all,'livre_new'=>$livre_new,
+            'livre_best'=>$livre_best]);
     }
 
     public function utilisateurs()
@@ -80,6 +88,19 @@ class livre extends Controller
     {
         //
     }
+
+
+    public function total_emprunt()
+    {
+         $pret = Livres::join('users','users.id','=','livres.idEtu')
+        ->select('livres.*')
+        ->where('users.id', Auth()->user()->id)
+        ->where('livres.disponible','=','1')
+        ->get();
+        // a rechercher . comment faire une recherche a partir d'une liste d'objets
+        return view('users.emprunt' ,['pret'=>$pret]);
+    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -155,6 +176,13 @@ class livre extends Controller
        return view('users.shopping-cart',['model'=>$model]);
     }
 
+     public function editProlongation(string $id)
+    {
+        $model=livres::find($id);
+       
+       return view('users.prolongation',['model'=>$model]);
+    }
+
     /**
      * Update the specified resource in storage.
      */
@@ -181,17 +209,58 @@ class livre extends Controller
 
     public function ajout_emprunt(Request $request)
     {
+
+
+        $panier = session('panier', []);
+
+        foreach ($panier as $id => $livre) 
+        {
+
+            $emprunt = livres::find($livre['id']);
+
+            $emprunt->dateEmprunt = now();
+
+            $emprunt->dateRemise =$livre['dateRemise'];
+
+            $emprunt->idEtu = Auth()->user()->id;
+
+            $emprunt->disponible = 1;
+
+            $emprunt->nbreEmprunt +=$livre['quantite'];
+
+            $emprunt->qte -= $livre['quantite'];
+
+            $emprunt->save();
+        }
+
+        session()->forget('panier');
+        session()->save();
+         return Redirect::to('/user/index');
+    }
+
+    public function ajout_prolongation(Request $request)
+    {
         $emprunt = livres::find($request->input('idLivre'));
-
-        $emprunt->dateEmprunt = now();
-
         $emprunt->dateRemise =$request->input('dateRemise');
-
-        $emprunt->idEtu = Auth()->user()->id;
-
-        $emprunt->disponible = 1;
-
         $emprunt->save();
+
+
+         return Redirect::to('/user/detail_emprunt');
+    }
+
+    public function rendre_emprunt(Request $request)
+    {
+        $livre_a_rendre = livres::find($request->input('id_livre'));
+
+        $livre_a_rendre->dateEmprunt = null;
+
+        $livre_a_rendre->dateRemise ='';
+
+        $livre_a_rendre->idEtu = null;
+
+        $livre_a_rendre->disponible = null;
+
+        $livre_a_rendre->save();
 
 
          return Redirect::to('/user/index');
@@ -205,4 +274,86 @@ class livre extends Controller
         $model = livres::where('id',$id)->delete();
         return redirect()->back()->withStatus(__('Suppresion réussi avec succès'));
     }
+
+    public function ajouterAuPanier(string $idLivre) 
+    {
+            
+            $livre = Livres::find($idLivre);
+             $quantite_livre = $livre->qte;
+
+            if (!$livre) {
+                return redirect()->route('/user/index')->with('error', 'Produit non trouvé');
+            }
+
+            $panier = session('panier', []);
+            $quantite = request('quantite', 1);
+
+            // Vérifiez si le produit est déjà dans le panier
+            if (isset($panier[$idLivre])) {
+                $qte = $panier[$idLivre]['quantite'] + $quantite;
+                if ($qte > $quantite_livre){
+                   return Redirect::to('/user/panier');  
+                }
+                $panier[$idLivre]['quantite'] += $quantite;
+            } else {
+                $panier[$idLivre] = [
+                    'id' =>$livre->id,
+                    'titre' => $livre->titre,
+                    'image_livre' => $livre->livre_image,
+                    'quantite' => $quantite,
+                    'dateRemise'=>''
+                ];
+
+            }
+
+            session(['panier' => $panier]);
+
+             return view('users.shopping-cart',['livre'=>$livre]);
+    }
+
+    public function afficherPanier() 
+    {
+        $panier = session('panier', []);
+
+        // Calculez le montant total
+        $nbreTotal = 0;
+        foreach ($panier as $id => $livre) {
+            $nbreTotal += $livre['quantite'];
+        }
+
+        return view('users.emprunt-panier', compact('panier', 'nbreTotal'));
+    }
+
+    public function mettreAJourDate() 
+    {
+        $panier = session('panier', []);
+        $date = request('dateRemise');
+        $idLivre=request('idLivre');
+
+    
+            $panier[$idLivre]['dateRemise'] = $date;
+       
+        
+
+        session(['panier' => $panier]);
+
+        return Redirect::to('/user/panier');
+    }
+
+    public function supprimerDuPanier(string $idLivre) 
+    {
+        $panier = session('panier', []);
+
+        if (isset($panier[$idLivre])) {
+            unset($panier[$idLivre]);
+        }
+
+        session(['panier' => $panier]);
+
+         return Redirect::to('/user/panier');
+    }
+
+
+
+
 }

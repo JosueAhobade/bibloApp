@@ -19,6 +19,8 @@ class Livre extends Model
         'idEtu',
         'disponible',
         'dateEmprunt',
-        'dateRemise'
+        'dateRemise',
+        'nbreEmprunt',
+        'qte',
     ];
 }

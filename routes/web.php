@@ -56,7 +56,15 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/user/index',[App\Http\Controllers\livre::class, 'afficher_livre']);
 Route::get('/user/pageloan{id}',[App\Http\Controllers\livre::class, 'editEmprunt']);
-Route::post('/emprunt', [App\Http\Controllers\livre::class, 'ajout_emprunt']);
+Route::get('/user/pageprolong{id}',[App\Http\Controllers\livre::class, 'editProlongation']);
+Route::get('/emprunt', [App\Http\Controllers\livre::class, 'ajout_emprunt']);
+Route::post('/prolongation', [App\Http\Controllers\livre::class, 'ajout_prolongation']);
+Route::post('/user/rendre_livre', [App\Http\Controllers\livre::class, 'rendre_emprunt']);
+Route::get('/user/detail_emprunt', [App\Http\Controllers\livre::class, 'total_emprunt']);
+Route::get('/user/ajout_panier{idLivre}', [App\Http\Controllers\livre::class, 'ajouterAuPanier']);
+Route::post('/modif_panier', [App\Http\Controllers\livre::class, 'mettreAJourDate']);
+Route::get('/user/delete{idLivre}', [App\Http\Controllers\livre::class, 'supprimerDuPanier']);
+Route::get('/user/panier', [App\Http\Controllers\livre::class, 'afficherPanier']);
 Route::get('/user/shop', function () {
 	return view('users.shop');
 	});

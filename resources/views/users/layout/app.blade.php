@@ -46,13 +46,14 @@
                         <ul>
                             <li class="active"><a href="./index">Accueil</a></li>
                             <li><a href="./shop">Boutique</a></li>
-                            <li><a href="#">Pages</a>
+                            <li><a href="./detail_emprunt">Emprunts</a></li>
+                            <!-- <li><a href="#">Pages</a>
                                 <ul class="dropdown">
                                     <li><a href="./shop-details">Shop Details</a></li>
                                     <li><a href="./shopping-cart">Shopping Cart</a></li>
                                     <li><a href="./blog">Blog Details</a></li>
                                 </ul>
-                            </li>
+                            </li> -->
                             <li><a href="./blog">Blog</a></li>
                         </ul>
                     </nav>
@@ -61,7 +62,7 @@
                     <div class="header__nav__option">
                         <a href="#" class="search-switch"><img src="/asset/img/icon/search.png" alt=""></a>
                         <a href="#"><img src="/asset/img/icon/heart.png" alt=""></a>
-                        <a href="#"><img src="/asset/img/icon/cart.png" alt=""> <span>0</span></a>
+                        <a href="./panier"><img src="/asset/img/icon/cart.png" alt=""> <span>0</span></a>
                         <div class="price">$0.00</div>
                     </div>
                 </div>

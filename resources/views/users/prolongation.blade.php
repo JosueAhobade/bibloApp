@@ -9,7 +9,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb__text">
-                        <h4>Shopping Cart</h4>
+                        <h4>Prolonger emprun</h4>
                         <div class="breadcrumb__links">
                             <a href="./index.html">Home</a>
                             <a href="./shop.html">Shop</a>
@@ -28,10 +28,11 @@
             <div class="row">
                 <div class="col-lg-8">
                     <div class="cart__discount">
-                        <h6>Date de restitution du livre</h6>
-                        <form action="/modif_panier" method="post">
+                        <h6>Nouvelle date de restitution du livre</h6>
+                        <form action="/prolongation" method="post">
                             @csrf
-                            <input type="hidden" value="{{$livre->id}}" name="idLivre">
+                            <input type="hidden" value="{{$model->id}}" name="idLivre">
+                            <input type="hidden" value="{{$model->dateRemise}}" id="dateRemise">
                             <input type="date" id="date" name="dateRemise" required="">
                             <button type="button" id="submit-button" onclick="checkDate()" >Confirmer emprunt</button>
 
@@ -43,7 +44,7 @@
                 </div>
 
                 <div class="col-lg-4">
-                     <img src="{{ asset('images/' . $livre->livre_image) }}" alt="" style=" max-width: 100%; height: auto;">
+                     <img src="{{ asset('images/' . $model->livre_image) }}" alt="" style=" max-width: 100%; height: auto;">
                     
                 </div>
             </div>
@@ -55,7 +56,7 @@
             // Récupérez la date saisie dans le champ de date
             var dateSaisie = new Date(document.getElementById("date").value);
             // Récupérez la date courante
-            var dateCourante = new Date();
+            var dateCourante = new Date(document.getElementById("dateRemise").value);
 
             if (isNaN(dateSaisie)) {
                 // La date n'est pas valide (l'utilisateur n'a pas saisi de date)
@@ -64,12 +65,11 @@
 
             else if (dateSaisie > dateCourante) {
                 // La date saisie est valide
-                
                 // Si la date est valide, vous pouvez soumettre le formulaire
                 document.querySelector('form').submit();
             } else {
                 // La date saisie est invalide
-                document.getElementById("message").innerHTML = "La date doit être supérieure à la date courante.";
+                document.getElementById("message").innerHTML = "La nouvelle date doit être postérieure à l'ancienne date.";
             }
         }
     </script>

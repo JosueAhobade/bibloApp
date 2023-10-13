@@ -52,14 +52,14 @@
                 <div class="col-lg-8 offset-lg-3">
                     <div class="banner__item">
                         <div class="banner__item__pic">
-                            <img src="{{ asset('images/' . $livre[0]->livre_image) }}" alt="" style=" max-width: 100%; height: auto;" >
+                            <img src="{{ asset('images/' . $livre_new[0]->livre_image) }}" alt="" style=" max-width: 100%; height: auto;" >
                         </div>
                         <div class="banner__item__text">
-                            <h2>{{ $livre[0]->titre }}</h2>
-                            @if ($livre[0]->disponible)
-                            <a href="pageloan{{$livre[0]->id}}">Indisponible </a>
+                            <h2>{{ $livre_new[0]->titre }}</h2>
+                            @if ($livre_new[0]->qte <= 0)
+                            <a href="#">Indisponible </a>
                             @else
-                            <a href="pageloan{{$livre[0]->id}}">Emprunter </a>
+                            <a href="ajout_panier{{$livre_new[0]->id}}">Emprunter </a>
                             @endif
                         </div>
                     </div>
@@ -67,14 +67,14 @@
                 <div class="col-lg-5">
                     <div class="banner__item banner__item--middle">
                         <div class="banner__item__pic">
-                            <img src="{{ asset('images/' . $livre[1]->livre_image) }}" alt="" style=" max-width: 100%; height: auto;">
+                            <img src="{{ asset('images/' . $livre_new[1]->livre_image) }}" alt="" style=" max-width: 100%; height: auto;">
                         </div>
                         <div class="banner__item__text">
-                            <h2>{{ $livre[1]->titre }}</h2>
-                            @if ($livre[1]->disponible)
-                            <a href="pageloan{{$livre[1]->id}}">Indisponible </a>
+                            <h2>{{ $livre_new[1]->titre }}</h2>
+                            @if ($livre_new[1]->qte == 0)
+                            <a href="{{$livre_new[1]->id}}">Indisponible </a>
                             @else
-                            <a href="pageloan{{$livre[1]->id}}">Emprunter </a>
+                            <a href="ajout_panier{{$livre_new[1]->id}}">Emprunter </a>
                             @endif
                         </div>
                     </div>
@@ -82,15 +82,15 @@
                 <div class="col-lg-7">
                     <div class="banner__item banner__item--last ">
                         <div class="banner__item__text h-50">
-                            <h2>{{ $livre[2]->titre }}</h2>
-                            @if ($livre[2]->disponible)
-                            <a href="pageloan{{$livre[2]->id}}">Indisponible </a>
+                            <h2>{{ $livre_new[2]->titre }}</h2>
+                            @if ($livre_new[2]->qte == 0)
+                            <a href="{{$livre_new[2]->id}}">Indisponible </a>
                             @else
-                            <a href="pageloan{{$livre[2]->id}}">Emprunter </a>
+                            <a href="ajout_panier{{$livre_new[2]->id}}">Emprunter </a>
                             @endif
                         </div>
                         <div class="banner__item__pic h-50">
-                            <img src="{{ asset('images/' . $livre[2]->livre_image) }}" alt="" style=" max-width: 100%; height: auto;">
+                            <img src="{{ asset('images/' . $livre_new[2]->livre_image) }}" alt="" style=" max-width: 100%; height: auto;">
                         </div>
                     </div>
                 </div>
@@ -105,17 +105,18 @@
             <div class="row">
                 <div class="col-lg-12">
                     <ul class="filter__controls">
-                        <li class="active" data-filter="*">Les plus lus</li>
+                        <li class="active" data-filter=".all">Tous</li>
                         <li data-filter=".new-arrivals">Nouveautés</li>
+                        <li data-filter=".new-sale">Les plus lus</li>
                     </ul>
                 </div>
             </div>
             <div class="row product__filter">
-                @foreach ($livre as $book)
-                <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals">
+                @foreach ($livre_all as $book)
+                <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix all">
                     <div class="product__item">
                         <div class="product__item__pic set-bg" data-setbg="{{ asset('images/' . $book->livre_image) }}">
-                            @if ($book->disponible)
+                            @if ($book->qte ==0 )
                             <span class="label" style="color: red">Indisponible</span>
                             @else
                             <span class="label" style="color: green">Disponible</span>
@@ -126,7 +127,75 @@
                         </div>
                         <div class="product__item__text">
                             <h6>{{ $book->titre }}</h6>
-                            <a href="pageloan{{ $book->id }}" class="add-cart">Emprunter</a>
+                            @if ($book->qte == 0)
+                            @else
+                             <span style="color: green;"><a href="ajout_panier{{ $book->id }}" class="add-cart">Ajouter au panier</a></span>
+                            <!-- <span style="color: green;"><a href="pageloan{{ $book->id }}" class="add-cart">Emprunter</a></span> -->
+                            @endif
+                            <div class="rating">
+                                <i class="fa fa-star-o"></i>
+                                <i class="fa fa-star-o"></i>
+                                <i class="fa fa-star-o"></i>
+                                <i class="fa fa-star-o"></i>
+                                <i class="fa fa-star-o"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+
+                @foreach ($livre_new as $book)
+                <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals">
+                    <div class="product__item">
+                        <div class="product__item__pic set-bg" data-setbg="{{ asset('images/' . $book->livre_image) }}">
+                            @if ($book->qte == 0)
+                            <span class="label" style="color: red">Indisponible</span>
+                            @else
+                            <span class="label" style="color: green">Disponible</span>
+                            @endif
+                            <ul class="product__hover">
+                                <li><a href="#"><img src="/asset/img/icon/heart.png" alt=""></a></li>
+                            </ul>
+                        </div>
+                        <div class="product__item__text">
+                            <h6>{{ $book->titre }}</h6>
+                            @if ($book->qte == 0)
+                            @else
+                             <span style="color: green;"><a href="ajout_panier{{ $book->id }}" class="add-cart">Ajouter au panier</a></span>
+                            <!-- <span style="color: green;"><a href="pageloan{{ $book->id }}" class="add-cart">Emprunter</a></span> -->
+                            @endif
+                            <div class="rating">
+                                <i class="fa fa-star-o"></i>
+                                <i class="fa fa-star-o"></i>
+                                <i class="fa fa-star-o"></i>
+                                <i class="fa fa-star-o"></i>
+                                <i class="fa fa-star-o"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+
+                 @foreach ($livre_best as $book)
+                <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-sale">
+                    <div class="product__item">
+                        <div class="product__item__pic set-bg" data-setbg="{{ asset('images/' . $book->livre_image) }}">
+                            @if ($book->qte == 0)
+                            <span class="label" style="color: red">Indisponible</span>
+                            @else
+                            <span class="label" style="color: green">Disponible</span>
+                            @endif
+                            <ul class="product__hover">
+                                <li><a href="#"><img src="/asset/img/icon/heart.png" alt=""></a></li>
+                            </ul>
+                        </div>
+                        <div class="product__item__text">
+                            <h6>{{ $book->titre }}</h6>
+                            @if ($book->qte == 0)
+                            @else
+                             <span style="color: green;"><a href="ajout_panier{{ $book->id }}" class="add-cart">Ajouter au panier</a></span>
+                            <!-- <span style="color: green;"><a href="pageloan{{ $book->id }}" class="add-cart">Emprunter</a></span> -->
+                            @endif
                             <div class="rating">
                                 <i class="fa fa-star-o"></i>
                                 <i class="fa fa-star-o"></i>
@@ -145,125 +214,15 @@
     <!-- Product Section End -->
 
     <!-- Categories Section Begin -->
-    <section class="categories spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3">
-                    <div class="categories__text">
-                        <h2>Clothings Hot <br /> <span>Shoe Collection</span> <br /> Accessories</h2>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="categories__hot__deal">
-                        <img src="img/product-sale.png" alt="">
-                        <div class="hot__deal__sticker">
-                            <span>Sale Of</span>
-                            <h5>$29.99</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 offset-lg-1">
-                    <div class="categories__deal__countdown">
-                        <span>Deal Of The Week</span>
-                        <h2>Multi-pocket Chest Bag Black</h2>
-                        <div class="categories__deal__countdown__timer" id="countdown">
-                            <div class="cd-item">
-                                <span>3</span>
-                                <p>Days</p>
-                            </div>
-                            <div class="cd-item">
-                                <span>1</span>
-                                <p>Hours</p>
-                            </div>
-                            <div class="cd-item">
-                                <span>50</span>
-                                <p>Minutes</p>
-                            </div>
-                            <div class="cd-item">
-                                <span>18</span>
-                                <p>Seconds</p>
-                            </div>
-                        </div>
-                        <a href="#" class="primary-btn">Shop now</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    
     <!-- Categories Section End -->
 
     <!-- Instagram Section Begin -->
-    <section class="instagram spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8">
-                    <div class="instagram__pic">
-                        <div class="instagram__pic__item set-bg" data-setbg="img/instagram/instagram-1.jpg"></div>
-                        <div class="instagram__pic__item set-bg" data-setbg="img/instagram/instagram-2.jpg"></div>
-                        <div class="instagram__pic__item set-bg" data-setbg="img/instagram/instagram-3.jpg"></div>
-                        <div class="instagram__pic__item set-bg" data-setbg="img/instagram/instagram-4.jpg"></div>
-                        <div class="instagram__pic__item set-bg" data-setbg="img/instagram/instagram-5.jpg"></div>
-                        <div class="instagram__pic__item set-bg" data-setbg="img/instagram/instagram-6.jpg"></div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="instagram__text">
-                        <h2>Instagram</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua.</p>
-                        <h3>#Male_Fashion</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    
     <!-- Instagram Section End -->
 
     <!-- Latest Blog Section Begin -->
-    <section class="latest spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="section-title">
-                        <span>Latest News</span>
-                        <h2>Fashion New Trends</h2>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-4 col-md-6 col-sm-6">
-                    <div class="blog__item">
-                        <div class="blog__item__pic set-bg" data-setbg="img/blog/blog-1.jpg"></div>
-                        <div class="blog__item__text">
-                            <span><img src="img/icon/calendar.png" alt=""> 16 February 2020</span>
-                            <h5>What Curling Irons Are The Best Ones</h5>
-                            <a href="#">Read More</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-6">
-                    <div class="blog__item">
-                        <div class="blog__item__pic set-bg" data-setbg="img/blog/blog-2.jpg"></div>
-                        <div class="blog__item__text">
-                            <span><img src="img/icon/calendar.png" alt=""> 21 February 2020</span>
-                            <h5>Eternity Bands Do Last Forever</h5>
-                            <a href="#">Read More</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-6">
-                    <div class="blog__item">
-                        <div class="blog__item__pic set-bg" data-setbg="img/blog/blog-3.jpg"></div>
-                        <div class="blog__item__text">
-                            <span><img src="img/icon/calendar.png" alt=""> 28 February 2020</span>
-                            <h5>The Health Benefits Of Sunglasses</h5>
-                            <a href="#">Read More</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    
     <!-- Latest Blog Section End -->
 
     @endsection

@@ -27,20 +27,20 @@ Route::get('/dashboard', function () {
 //****************** Route admin ************************************************
 
 Route::get('/index', [App\Http\Controllers\Livre::class, 'index']
-	)->middleware(['auth', 'verified'])->name('home');
+	)->middleware(['auth', 'verified' , 'admin'])->name('home');
 Route::get('/utilisateurs', function () {
     return view('Admin.users');
 	});
-Route::get('/ajout', function () {
-    return view('Admin.ajoutLivre');
-	});
+// Route::get('/ajout', function () {
+//     return view('Admin.ajoutLivre');
+// 	});
 	Route::get('/home', [App\Http\Controllers\livre::class, 'index']
-	)->middleware(['auth', 'verified'])->name('home');
+	)->middleware(['auth', 'verified' ,'admin'])->name('home');
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth','admin'])->group(function () {
 
 	Route::get('/ajout-livre', function () {
-    return view('Admin.add-livres');
+    return view('Admin.ajoutLivre');
 	});
 	Route::post('/add-books', [App\Http\Controllers\livre::class, 'store']);
 	Route::get('modif_page{id}',[App\Http\Controllers\livre::class, 'edit']);
@@ -53,7 +53,9 @@ Route::middleware('auth')->group(function () {
 });
 
 //****************** Route user ************************************************
-Route::middleware('auth')->group(function () {
+
+
+Route::middleware(['auth' , 'verified'])->group(function () {
 	Route::get('/user/index',[App\Http\Controllers\livre::class, 'afficher_livre']);
 	Route::get('/user/pageloan{id}',[App\Http\Controllers\livre::class, 'editEmprunt']);
 	Route::get('/user/pageprolong{id}',[App\Http\Controllers\livre::class, 'editProlongation']);

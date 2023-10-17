@@ -85,7 +85,7 @@
                           <tr>
                             <th>Titre</th>
                             <th>Auteur</th>
-                            <th>Maison d'édition</th>
+                            <th>Qte en prêt</th>
                             <th>Date emprunt</th>
                             <th>Date remise</th>
                             <th>Utilisateurs</th>

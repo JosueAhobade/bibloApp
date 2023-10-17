@@ -21,9 +21,8 @@ class livre extends Controller
 
     public function livre_disponible()
     {
-      $livreDisponible = Emprunts::join('livres','livres.id','=','emprunts.idLivre')
-        ->select('emprunts.*','livres.*')
-        ->where('emprunts.statut', '0')
+      $livreDisponible = livres::select('*')
+        ->where('livres.disponible', '0')
         ->get();
         // a rechercher . comment faire une recherche a partir d'une liste d'objets
         return view('Admin.disponible' ,['livreDisponible'=>$livreDisponible]);
@@ -31,9 +30,8 @@ class livre extends Controller
 
     public function livre_en_pret()
     {
-        $livreEnPret = Emprunts::join('livres','livres.id','=','emprunts.idLivre')
-        ->select('emprunts.*','livres.*')
-        ->where('emprunts.statut', '1')
+        $livreEnPret = Livres::select('*')
+        ->where('livres.disponible', '1')
         ->get();
         // a rechercher . comment faire une recherche a partir d'une liste d'objets
         return view('Admin.pret' ,['livreEnPret'=>$livreEnPret]);
@@ -131,23 +129,6 @@ class livre extends Controller
         ]);
         $livre->save();
 
-        // $livre = new Livres();
-
-        // $livre->titre = $request->input('titre');
-
-        // $livre->auteur = $request->input('auteur');
-
-        // $livre->date_pub = $request->input('date_pub');
-
-        // $livre->maison_edition = $request->input('maison_edition');
-
-        // $livre->langue = $request->input('langue');
-
-        // $livre->description = $request->input('description');
-
-        // $livre->save();
-
-
         return Redirect::to('/index');
     }
 
@@ -217,20 +198,23 @@ class livre extends Controller
         {
 
             $emprunt = livres::find($livre['id']);
-
             $emprunt->dateEmprunt = now();
-
             $emprunt->dateRemise =$livre['dateRemise'];
-
             $emprunt->idEtu = Auth()->user()->id;
-
             $emprunt->disponible = 1;
-
             $emprunt->nbreEmprunt +=$livre['quantite'];
-
             $emprunt->qte -= $livre['quantite'];
-
             $emprunt->save();
+
+
+            $emprunt1 = new Emprunts();
+            $emprunt1->dateEmprunt = now();
+            $emprunt1->dateRemise = $livre['dateRemise'];
+            $emprunt1->idEtu = Auth()->user()->id;
+            $emprunt1->idLivre = $livre['id'];
+            $emprunt1->statut = 1;
+            $emprunt1->qte_pret = $livre['quantite'];
+            $emprunt1->save();
         }
 
         session()->forget('panier');
@@ -290,11 +274,11 @@ class livre extends Controller
 
             // Vérifiez si le produit est déjà dans le panier
             if (isset($panier[$idLivre])) {
-                $qte = $panier[$idLivre]['quantite'] + $quantite;
+                $qte = $panier[$idLivre]['quantite'];
                 if ($qte > $quantite_livre){
                    return Redirect::to('/user/panier');  
                 }
-                $panier[$idLivre]['quantite'] += $quantite;
+                $panier[$idLivre]['quantite'] = $quantite;
             } else {
                 $panier[$idLivre] = [
                     'id' =>$livre->id,

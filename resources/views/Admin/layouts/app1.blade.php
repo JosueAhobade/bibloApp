@@ -66,7 +66,7 @@
             </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/ajout">
+            <a class="nav-link" href="/ajout-livre">
               <i class="mdi mdi-format-list-bulleted menu-icon"></i>
               <span class="menu-title">Ajouts</span>
             </a>

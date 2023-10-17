@@ -33,7 +33,7 @@
     
 
     <!-- Header Section Begin -->
-    <header class="header">
+    <header class="header fixed-top">
         <div class="container">
             <div class="row ">
                 <div class="col-lg-3 col-md-3">
@@ -42,7 +42,7 @@
                     
                 </div>
                 <div class="col-lg-6 col-md-6">
-                    <nav class="header__menu mobile-menu">
+                    <nav class="header__menu mobile-menu ">
                         <ul>
                             <li class="active"><a href="./index">Accueil</a></li>
                             <li><a href="./shop">Boutique</a></li>

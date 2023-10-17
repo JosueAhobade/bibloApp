@@ -56,10 +56,12 @@
                         </div>
                         <div class="banner__item__text">
                             <h2>{{ $livre_new[0]->titre }}</h2>
-                            @if ($livre_new[0]->qte <= 0)
+                           @if ($livre_new[0]->disponible &&  $livre_new[0]->idEtu == Auth()->user()->id)
                             <a href="#">Indisponible </a>
+                            @elseif ($livre_new[0]->qte > 0)
+                            <a href="ajout_panier{{$livre_new[1]->id}}">Emprunter </a>
                             @else
-                            <a href="ajout_panier{{$livre_new[0]->id}}">Emprunter </a>
+                            <a href="#">Indisponible </a>
                             @endif
                         </div>
                     </div>
@@ -71,10 +73,12 @@
                         </div>
                         <div class="banner__item__text">
                             <h2>{{ $livre_new[1]->titre }}</h2>
-                            @if ($livre_new[1]->qte == 0)
-                            <a href="{{$livre_new[1]->id}}">Indisponible </a>
-                            @else
+                            @if ($livre_new[1]->disponible &&  $livre_new[1]->idEtu == Auth()->user()->id)
+                            <a href="#">Indisponible </a>
+                            @elseif ($livre_new[1]->qte > 0)
                             <a href="ajout_panier{{$livre_new[1]->id}}">Emprunter </a>
+                            @else
+                            <a href="#">Indisponible </a>
                             @endif
                         </div>
                     </div>
@@ -83,10 +87,12 @@
                     <div class="banner__item banner__item--last ">
                         <div class="banner__item__text h-50">
                             <h2>{{ $livre_new[2]->titre }}</h2>
-                            @if ($livre_new[2]->qte == 0)
-                            <a href="{{$livre_new[2]->id}}">Indisponible </a>
+                            @if ($livre_new[2]->disponible &&  $livre_new[2]->idEtu == Auth()->user()->id)
+                            <a href="#">Indisponible </a>
+                            @elseif ($livre_new[2]->qte > 0)
+                            <a href="ajout_panier{{$livre_new[1]->id}}">Emprunter </a>
                             @else
-                            <a href="ajout_panier{{$livre_new[2]->id}}">Emprunter </a>
+                            <a href="#">Indisponible </a>
                             @endif
                         </div>
                         <div class="banner__item__pic h-50">
@@ -116,10 +122,12 @@
                 <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix all">
                     <div class="product__item">
                         <div class="product__item__pic set-bg" data-setbg="{{ asset('images/' . $book->livre_image) }}">
-                            @if ($book->qte ==0 )
+                            @if ($book->disponible && $book->idEtu == Auth()->user()->id )
                             <span class="label" style="color: red">Indisponible</span>
-                            @else
+                            @elseif ($book->qte > 0)
                             <span class="label" style="color: green">Disponible</span>
+                            @else
+                            <span class="label" style="color: red">Indisponible</span>
                             @endif
                             <ul class="product__hover">
                                 <li><a href="#"><img src="/asset/img/icon/heart.png" alt=""></a></li>
@@ -127,8 +135,7 @@
                         </div>
                         <div class="product__item__text">
                             <h6>{{ $book->titre }}</h6>
-                            @if ($book->qte == 0)
-                            @else
+                            @if (!$book->disponible)
                              <span style="color: green;"><a href="ajout_panier{{ $book->id }}" class="add-cart">Ajouter au panier</a></span>
                             <!-- <span style="color: green;"><a href="pageloan{{ $book->id }}" class="add-cart">Emprunter</a></span> -->
                             @endif
@@ -148,10 +155,12 @@
                 <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals">
                     <div class="product__item">
                         <div class="product__item__pic set-bg" data-setbg="{{ asset('images/' . $book->livre_image) }}">
-                            @if ($book->qte == 0)
+                            @if ($book->disponible && $book->idEtu == Auth()->user()->id )
                             <span class="label" style="color: red">Indisponible</span>
-                            @else
+                            @elseif ($book->qte > 0)
                             <span class="label" style="color: green">Disponible</span>
+                            @else
+                            <span class="label" style="color: red">Indisponible</span>
                             @endif
                             <ul class="product__hover">
                                 <li><a href="#"><img src="/asset/img/icon/heart.png" alt=""></a></li>
@@ -159,8 +168,7 @@
                         </div>
                         <div class="product__item__text">
                             <h6>{{ $book->titre }}</h6>
-                            @if ($book->qte == 0)
-                            @else
+                            @if (!$book->disponible)
                              <span style="color: green;"><a href="ajout_panier{{ $book->id }}" class="add-cart">Ajouter au panier</a></span>
                             <!-- <span style="color: green;"><a href="pageloan{{ $book->id }}" class="add-cart">Emprunter</a></span> -->
                             @endif
@@ -180,10 +188,12 @@
                 <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-sale">
                     <div class="product__item">
                         <div class="product__item__pic set-bg" data-setbg="{{ asset('images/' . $book->livre_image) }}">
-                            @if ($book->qte == 0)
+                            @if ($book->disponible && $book->idEtu == Auth()->user()->id )
                             <span class="label" style="color: red">Indisponible</span>
-                            @else
+                            @elseif ($book->qte > 0)
                             <span class="label" style="color: green">Disponible</span>
+                            @else
+                            <span class="label" style="color: red">Indisponible</span>
                             @endif
                             <ul class="product__hover">
                                 <li><a href="#"><img src="/asset/img/icon/heart.png" alt=""></a></li>
@@ -191,8 +201,7 @@
                         </div>
                         <div class="product__item__text">
                             <h6>{{ $book->titre }}</h6>
-                            @if ($book->qte == 0)
-                            @else
+                            @if (!$book->disponible)
                              <span style="color: green;"><a href="ajout_panier{{ $book->id }}" class="add-cart">Ajouter au panier</a></span>
                             <!-- <span style="color: green;"><a href="pageloan{{ $book->id }}" class="add-cart">Emprunter</a></span> -->
                             @endif

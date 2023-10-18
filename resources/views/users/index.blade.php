@@ -11,7 +11,7 @@
                         <div class="col-xl-5 col-lg-7 col-md-8">
                             <div class="hero__text">
                                 <h2 style="color: white;">Bibliothèque de <br>l'UG</h2>
-                                <a href="#" class="primary-btn">Shop now <span class="arrow_right"></span></a>
+                                
                                 <div class="hero__social">
                                     <a href="#"><i class="fa fa-facebook"></i></a>
                                     <a href="#"><i class="fa fa-twitter"></i></a>
@@ -23,7 +23,7 @@
                     </div>
                 </div>
             </div>
-            <div class="hero__items set-bg" data-setbg="/asset/img/hero/hero-2.jpg">
+            <div class="hero__items set-bg" data-setbg="../img/bibl.jpg">
                 <div class="container">
                     <div class="row">
                         <div class="col-xl-5 col-lg-7 col-md-8">

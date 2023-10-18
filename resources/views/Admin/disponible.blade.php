@@ -62,7 +62,7 @@
         <div class="main-panel">
           <div class="content-wrapper pb-0">
             <div class="page-header flex-wrap">
-              <h3 class="mb-0"> Hello, bienvenue à l'UG!
+              <h3 class="mb-0"> Livres disponibles
               </h3>
               <div class="d-flex">
                 

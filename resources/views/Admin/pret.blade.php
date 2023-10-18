@@ -62,13 +62,12 @@
         <div class="main-panel">
           <div class="content-wrapper pb-0">
             <div class="page-header flex-wrap">
-              <h3 class="mb-0"> Hello, bienvenue à l'UG!
+              <h3 class="mb-0"> Pret des livres des utilisateurs
               </h3>
               <div class="d-flex">
                 
-                
+               
 
-                <button type="button" class="btn btn-sm ml-3 btn-success"> Ajouter </button>
               </div>
             </div>
             <div class="row">

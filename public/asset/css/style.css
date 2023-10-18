@@ -316,7 +316,7 @@ ol {
 -----------------------*/
 
 .header {
-	background: #ffffff;
+	background: #b784b5;
 }
 
 .header__top {
@@ -609,6 +609,7 @@ ol {
 	font-weight: 700;
 	line-height: 58px;
 	margin-bottom: 30px;
+	margin-left: 100%;
 	position: relative;
 	top: 100px;
 	opacity: 0;
